@@ -1,5 +1,5 @@
    /* 1. ESTILOS GLOBALES */
-
+  
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -32,6 +32,10 @@ tr:hover {
     background-color: #f1f1f1;
 }
 
+/* Alineaciones extra para la tabla de ventas */
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+
 /* Botones Generales */
 button {
     cursor: pointer;
@@ -52,7 +56,7 @@ button {
 }
 
    /* 2. PANTALLA DE LOGIN (.page-login) */
-
+  
 body.page-login {
     display: flex;
     justify-content: center;
@@ -100,72 +104,168 @@ body.page-login {
     min-height: 20px;
 }
 
-
-   /* 3. PANTALLA DE VENTAS (.page-ventas) */
- 
+   /* 3. PANTALLA DE VENTAS (.page-ventas) - MEJORADA */
+   
 body.page-ventas {
-    display: none; /* OCULTO POR DEFECTO (Seguridad Anti-parpadeo) */
-    padding: 20px;
-    gap: 20px;
-    background-color: #e9ecef;
+    display: none; /* OCULTO POR DEFECTO (Seguridad) */
+    background-color: #f4f6f9;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden; /* Evita scroll en toda la página, solo en la tabla */
 }
 
-/* Panel Izquierdo (Lista) */
-.panel-izq {
-    flex: 2;
+/* Header específico de ventas */
+.page-ventas header {
     background: white;
+    padding: 10px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    z-index: 10;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* Contenedor Principal (Grid Layout) */
+.main-container {
+    display: flex;
+    gap: 20px;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    height: calc(100vh - 80px); /* Resta altura aprox del header */
+    box-sizing: border-box;
+}
+
+/* --- PANEL IZQUIERDO (Lista) --- */
+.panel-izq {
+    flex: 3; /* Ocupa el 75% del ancho */
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* Barra de Búsqueda Moderna */
+.search-bar-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    opacity: 0.5;
 }
 
 #input-isbn {
     width: 100%;
-    padding: 15px;
-    font-size: 1.1em;
-    border: 2px solid #007bff;
-    border-radius: 5px;
+    padding: 15px 15px 15px 45px; /* Espacio para el icono */
+    font-size: 1.2em;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    transition: all 0.3s;
     outline: none;
     box-sizing: border-box;
 }
 
-/* Panel Derecho (Totales) */
+#input-isbn:focus {
+    border-color: #007bff;
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(0,123,255,0.1);
+}
+
+/* Contenedor de Tabla con Scroll */
+.table-container {
+    flex: 1; 
+    overflow-y: auto; /* Solo la tabla hace scroll */
+}
+
+/* --- PANEL DERECHO (Resumen Fijo) --- */
 .panel-der {
-    flex: 1;
+    flex: 1; /* Ocupa el 25% */
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    height: fit-content;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #e9ecef;
+}
+
+.receipt-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.2em;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+.receipt-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.total-row span {
+    display: block;
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 5px;
 }
 
 .total-display {
-    font-size: 2.5em;
-    font-weight: bold;
+    font-size: 3.5em; /* NÚMERO GIGANTE */
+    font-weight: 800;
     color: #28a745;
-    margin: 20px 0;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -1px;
     text-align: right;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
 }
 
 .btn-cobrar {
     width: 100%;
-    padding: 15px;
-    background-color: #28a745;
+    padding: 20px;
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
     color: white;
-    font-size: 1.2em;
+    font-size: 1.4em;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+    border: none;
+    transition: transform 0.2s;
+}
+
+.btn-cobrar:active {
+    transform: scale(0.98);
+}
+
+.status-msg {
+    text-align: center;
+    margin-top: 10px;
+    min-height: 20px;
     font-weight: bold;
 }
 
-.btn-cobrar:hover {
-    background-color: #218838;
-}
-
-
    /* 4. PANTALLA DE INVENTARIO (.page-admin) */
+
 
 body.page-admin {
     display: none; /* OCULTO POR DEFECTO (Seguridad) */
@@ -190,7 +290,7 @@ body.page-admin {
     color: #333;
 }
 
-.page-admin .nav-links {
+.page-admin .nav-links, .page-ventas .nav-links {
     display: flex;
     align-items: center;
     gap: 15px;
@@ -204,7 +304,7 @@ body.page-admin {
 
 .link-azul:hover {
     text-decoration: underline;
-} /* <--- AQUÍ FALTABA CERRAR LA LLAVE ANTES */
+}
 
 /* Sección de Auditoría (Fondo amarillo) */
 .audit-section {
@@ -219,4 +319,96 @@ body.page-admin {
 .btn-edit {
     background-color: #ffc107;
     color: #333;
+}
+
+   /* 5. REPORTES Y FILTROS */
+ 
+
+.filters {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.filters label {
+    font-weight: bold;
+    color: #555;
+}
+
+.filters input, .filters select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+.report-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.report-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+   /* 6. ESTILOS ESPECÍFICOS DE INVENTARIO */
+
+
+
+#form-agregar {
+    display: none; 
+    margin-bottom: 30px;
+    border-left: 5px solid #28a745; /* Borde verde para indicar "Nuevo" */
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-row div {
+    flex: 1;
+}
+
+.form-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.form-row input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Importante para inputs */
+}
+
+/* Ajustes para la tabla de inventario */
+.table-inventory td {
+    vertical-align: middle;
+}
+/* ... (Tus estilos anteriores) ... */
+
+/* Estilo para el nombre de usuario en el header */
+.user-info {
+    font-weight: bold;
+    color: #444;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #e9ecef;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
 }

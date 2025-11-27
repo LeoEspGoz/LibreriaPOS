@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Empleados</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="page-admin">
+
+    <header>
+        <h1>👔 Gestión de Empleados</h1>
+        <div class="nav-links">
+            <span class="user-info">👤 <span id="nombre-usuario">Cargando...</span></span>
+            <a href="/index.html" class="link-azul">📦 Inventario</a>
+            <a href="/ventas.html" class="link-azul">🛒 Caja</a>
+            <a href="/reportes.html" class="link-azul">📈 Reportes</a>
+            <button onclick="logout()" class="btn-danger">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <div class="report-container" style="padding-top: 20px;">
+        
+        <div class="report-card">
+            <div style="border-bottom: 1px solid #eee; margin-bottom: 20px; padding-bottom: 10px;">
+                <h2 style="margin: 0; color: #333;">Datos del Empleado</h2>
+                <small style="color: #666;">Registra o edita la información del personal y sus accesos.</small>
+            </div>
+            
+            <input type="hidden" id="empId"> 
+
+            <div class="filters" style="display: block; background: #fff; padding: 0;">
+                
+                <h4 style="margin: 0 0 10px 0; color: #007bff; border-left: 3px solid #007bff; padding-left: 10px;">
+                    1. Información Personal
+                </h4>
+                <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+                    <div style="flex: 2;">
+                        <label style="display: block; margin-bottom: 5px; font-size: 0.9em;">Nombre Completo</label>
+                        <input type="text" id="nombre" placeholder="Ej. Juan Pérez" style="width: 100%; margin: 0;" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-size: 0.9em;">Puesto</label>
+                        <input type="text" id="puesto" placeholder="Ej. Cajero" style="width: 100%; margin: 0;" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-size: 0.9em;">Teléfono</label>
+                        <input type="text" id="telefono" placeholder="Ej. 445-123-4567" style="width: 100%; margin: 0;" required>
+                    </div>
+                </div>
+
+                <h4 style="margin: 0 0 10px 0; color: #28a745; border-left: 3px solid #28a745; padding-left: 10px;">
+                    2. Credenciales de Sistema
+                </h4>
+                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-size: 0.9em;">Usuario</label>
+                        <input type="text" id="usuario" placeholder="Usuario para login" style="width: 100%; margin: 0;">
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-size: 0.9em;">Contraseña</label>
+                        <input type="password" id="password" placeholder="••••••" style="width: 100%; margin: 0;">
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-size: 0.9em;">Rol de Permisos</label>
+                        <select id="rol" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; margin: 0;">
+                            <option value="Vendedor">Vendedor (Solo Caja)</option>
+                            <option value="Admin">Administrador (Total)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="text-align: right; border-top: 1px solid #eee; padding-top: 20px; margin-top: 20px;">
+                    <button onclick="limpiarFormulario()" style="background-color: #6c757d; color: white; margin-right: 10px; padding: 10px 20px;">
+                        Cancelar
+                    </button>
+                    <button onclick="guardarEmpleado()" id="btn-guardar" style="background-color: #007bff; color: white; padding: 10px 20px; font-weight: bold;">
+                        💾 Guardar Empleado
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-card" style="margin-top: 30px;">
+            <h3 style="margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;">Lista de Personal</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" width="5%">ID</th>
+                        <th width="25%">Nombre</th>
+                        <th width="20%">Puesto</th>
+                        <th width="15%">Teléfono</th>
+                        <th width="15%">Fecha Ingreso</th>
+                        <th class="text-center" width="20%">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-empleados">
+                    </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="js/empleados.js"></script>
+</body>
+</html>

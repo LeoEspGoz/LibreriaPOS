@@ -3,37 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS - Caja</title>
-    <link rel="stylesheet" href="css/styles.css"> 
+    <title>Caja</title>
+    <link rel="stylesheet" href="/css/styles.css"> 
 </head>
 <body class="page-ventas">
+    
+    <header>
+        <div class="header-content">
+            <h1>🛒 Punto de Venta</h1>
+            <div class="nav-links">
+                <span class="user-info">👤 <span id="nombre-usuario">Cargando...</span></span>
+                <a href="/index.html" class="link-azul">📦 Inventario</a>
+                <a href="/empleados.html" class="link-azul">👔 Empleados</a>
+                <a href="/reportes.html" class="link-azul">📈 Reportes</a>
+                <button onclick="logout()" class="btn-danger">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
 
-    <div class="panel-izq">
-        <h2>🛒 Nueva Venta</h2>
-        <input type="text" id="input-isbn" placeholder="Escanea el código de barras aquí (o escribe y Enter)..." autofocus>
+    <main class="main-container">
         
-        <table>
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Precio</th>
-                    <th>Cant.</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="tabla-carrito">
-                </tbody>
-        </table>
-    </div>
+        <section class="panel-izq">
+            <div class="search-bar-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="input-isbn" placeholder="Escanea ISBN o escribe aquí..." autofocus autocomplete="off">
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th class="text-right">Precio</th>
+                            <th class="text-center">Cant.</th>
+                            <th class="text-right">Subtotal</th>
+                            <th class="text-center">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-carrito">
+                        </tbody>
+                </table>
+            </div>
+        </section>
 
-    <div class="panel-der">
-        <h3>Resumen</h3>
-        <div class="total-display" id="total-display">$0.00</div>
-        <button class="btn-cobrar" onclick="procesarVenta()">Cobrar (F12)</button>
-        <p id="mensaje-estado"></p>
-    </div>
+        <section class="panel-der">
+            <div class="receipt-header">
+                <h3>Resumen de Venta</h3>
+                <small id="fecha-actual">Fecha: --/--/--</small>
+            </div>
+            
+            <div class="receipt-body">
+                <div class="total-row">
+                    <span>Total a Pagar:</span>
+                    <div class="total-display" id="total-display">$0.00</div>
+                </div>
+                <p id="items-count" style="color: gray; font-size: 0.9em; text-align: right;">0 artículos</p>
+            </div>
+
+            <div class="receipt-actions">
+                <button class="btn-cobrar" onclick="procesarVenta()">
+                    ✅ COBRAR (F12)
+                </button>
+                <p id="mensaje-estado" class="status-msg"></p>
+            </div>
+        </section>
+
+    </main>
 
     <script src="js/ventas.js"></script>
+    <script>
+        // Pequeño script visual para la fecha
+        document.getElementById('fecha-actual').innerText = new Date().toLocaleDateString();
+    </script>
 </body>
 </html>

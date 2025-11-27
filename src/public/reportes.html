@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="page-admin">
+    
+    <header>
+        <h1>📈 Reportes de Ventas</h1>
+        <div class="nav-links">
+            <span class="user-info">👤 <span id="nombre-usuario">Cargando...</span></span>
+            <a href="/index.html" class="link-azul">📦 Inventario</a>
+            <a href="/ventas.html" class="link-azul">🛒 Caja</a>
+            <a href="/empleados.html" class="link-azul">👔 Empleados</a>
+            <button onclick="logout()" class="btn-danger">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <div class="report-container" style="padding-top: 20px;">
+        
+        <div class="report-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2 style="margin: 0;">👤 Ventas por Empleado</h2>
+            </div>
+            
+            <div class="filters">
+                <label>Desde: <input type="date" id="fechaInicio"></label>
+                <label>Hasta: <input type="date" id="fechaFin"></label>
+                <button onclick="generarReporteEmpleados()" style="background-color: #007bff; color: white;">🔍 Generar</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th width="15%">Clave</th>
+                        <th>Nombre del Empleado</th>
+                        <th class="text-right">Monto Total ($)</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-empleados">
+                    <tr><td colspan="3" class="text-center" style="color: #666; padding: 20px;">Selecciona un rango de fechas para ver datos.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="height: 40px;"></div>
+
+        <div class="report-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2 style="margin: 0;">📖 Libros Más Vendidos</h2>
+            </div>
+
+            <div class="filters">
+                <label>Mes: 
+                    <select id="selectMes">
+                        <option value="1">Enero</option>
+                        <option value="2">Febrero</option>
+                        <option value="3">Marzo</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Mayo</option>
+                        <option value="6">Junio</option>
+                        <option value="7">Julio</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+                    </select>
+                </label>
+                <label>Año: <input type="number" id="inputAnio" value="2025" style="width: 80px;"></label>
+                <button onclick="generarReporteLibros()" style="background-color: #007bff; color: white;">🔍 Generar</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th width="15%">ISBN</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th class="text-right">Costo Unit.</th>
+                        <th class="text-center">Unidades</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-libros">
+                    <tr><td colspan="5" class="text-center" style="color: #666; padding: 20px;">Selecciona mes y año para consultar.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="js/reportes.js"></script>
+</body>
+</html>

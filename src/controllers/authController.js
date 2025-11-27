@@ -4,24 +4,37 @@ exports.login = async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // Buscamos el usuario (En un sistema real, la contraseña debería estar encriptada)
-        const [rows] = await db.query(
-            'SELECT UsuarioID, NombreUsuario, Rol FROM Usuarios WHERE NombreUsuario = ? AND Password = ? AND Estado = 1', 
-            [username, password]
-        );
+        // CORRECCIÓN PARA CUMPLIR RÚBRICA:
+        // No comparamos la contraseña directa, usamos SHA2(?, 256) en la consulta SQL.
+        const sql = `
+            SELECT UsuarioID, NombreUsuario, Rol 
+            FROM Usuarios 
+            WHERE NombreUsuario = ? 
+            AND Password = SHA2(?, 256) 
+            AND Estado = 1
+        `;
+
+        const [rows] = await db.query(sql, [username, password]);
 
         if (rows.length > 0) {
             const user = rows[0];
-            // Devolvemos los datos del usuario para guardarlos en el Frontend
+            
+            // Éxito: Devolvemos los datos del usuario (sin el password)
             res.json({ 
                 success: true, 
-                message: 'Bienvenido', 
+                message: 'Bienvenido al sistema', 
                 user: user 
             });
         } else {
-            res.status(401).json({ success: false, message: 'Usuario o contraseña incorrectos' });
+            // Fallo: Credenciales inválidas
+            res.status(401).json({ 
+                success: false, 
+                message: 'Usuario o contraseña incorrectos' 
+            });
         }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        // Control de errores para evitar caída del servidor
+        console.error("Error en login:", error);
+        res.status(500).json({ message: 'Error interno del servidor' });
     }
 };

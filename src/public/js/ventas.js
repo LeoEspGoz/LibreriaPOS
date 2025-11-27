@@ -5,12 +5,23 @@ const usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioPOS'));
 if (!usuarioLogueado) {
     window.location.href = '/login.html';
 } else {
-    // Si pasó la seguridad, mostramos el cuerpo de la página
-    // (Asegúrate de tener body { display: none; } en tu CSS para que funcione el efecto)
     document.body.style.display = "flex"; 
-    
-    // Opcional: Si quieres mostrar el nombre del cajero en algún lado:
-    // console.log("Cajero activo:", usuarioLogueado.NombreUsuario);
+    const displayNombre = document.getElementById('nombre-usuario');
+    if (displayNombre) {
+        displayNombre.textContent = usuarioLogueado.NombreUsuario; // Usa el nombre real de la BD
+         displayNombre.textContent = `${usuarioLogueado.NombreUsuario} (${usuarioLogueado.Rol})`;
+    }
+
+    // NUEVO: Ocultar enlaces prohibidos en el menú
+    if (usuarioLogueado.Rol !== 'Admin') {
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            // Si el link lleva a empleados o reportes, lo ocultamos
+            if (link.href.includes('empleados') || link.href.includes('reportes')) {
+                link.style.display = 'none';
+            }
+        });
+    }
 }
 
 

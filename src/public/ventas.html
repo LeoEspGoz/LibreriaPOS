@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS - Caja</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; display: flex; gap: 20px; }
+        .panel-izq { flex: 2; }
+        .panel-der { flex: 1; background: #f8f9fa; padding: 20px; border-radius: 8px; height: fit-content;}
+        
+        #input-isbn { width: 100%; padding: 15px; font-size: 1.2em; margin-bottom: 20px; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+        
+        .total-display { font-size: 2em; font-weight: bold; color: #28a745; margin-bottom: 20px; }
+        .btn-cobrar { width: 100%; padding: 15px; background: #007bff; color: white; border: none; font-size: 1.2em; cursor: pointer; }
+        .btn-cobrar:hover { background: #0056b3; }
+        
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="panel-izq">
+        <h2>🛒 Nueva Venta</h2>
+        <input type="text" id="input-isbn" placeholder="Escanea el código de barras aquí (o escribe y Enter)..." autofocus>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cant.</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tabla-carrito">
+                </tbody>
+        </table>
+    </div>
+
+    <div class="panel-der">
+        <h3>Resumen</h3>
+        <div class="total-display" id="total-display">$0.00</div>
+        <button class="btn-cobrar" onclick="procesarVenta()">Cobrar (F12)</button>
+        <p id="mensaje-estado"></p>
+    </div>
+
+    <script src="js/ventas.js"></script>
+</body>
+</html>

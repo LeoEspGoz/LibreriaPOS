@@ -1,17 +1,40 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
+const path = require('path'); // Necesario para rutas de archivos
 require('dotenv').config();
+
+// IMPORTAR LA CONEXIÓN (Para el diagnóstico)
+const db = require('./src/config/db');
+
+// --- AQUÍ ESTABA EL ERROR: FALTABA ESTA LÍNEA ---
+const productoRoutes = require('./src/routes/productoRoutes');
+const ventaRoutes = require('./src/routes/ventaRoutes'); // <--- NUEVO
+// ------------------------------------------------
 
 const app = express();
 
-// Middlewares (Configuraciones)
-app.use(cors()); // Permite peticiones de otros dominios (útil en desarrollo)
-app.use(express.json()); // Permite recibir datos en formato JSON (POST/PUT)
-app.use(express.static(path.join(__dirname, 'src/public'))); // Servir archivos frontend
+// Middlewares
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'src/public')));
+app.use('/api/ventas', ventaRoutes); // <--- NUEVO
 
-// Ruta de prueba para verificar conexión
-const db = require('./src/config/db');
+// --- BLOQUE DE DIAGNÓSTICO (Opcional, pero útil) ---
+(async () => {
+  try {
+    const connection = await db.getConnection();
+    console.log('✅ ¡CONEXIÓN EXITOSA A LA BASE DE DATOS!');
+    connection.release();
+  } catch (error) {
+    console.error('❌ ERROR DE CONEXIÓN:', error.message);
+  }
+})();
+// ---------------------------------------------------
+
+// CONECTAR LAS RUTAS
+app.use('/api/productos', productoRoutes); // Ahora sí va a funcionar porque ya lo importamos arriba
+
+// Ruta de prueba Health Check
 app.get('/api/health', async (req, res) => {
     try {
         const [rows] = await db.query('SELECT 1 + 1 AS solution');
@@ -21,8 +44,8 @@ app.get('/api/health', async (req, res) => {
     }
 });
 
-// Iniciar Servidor
+// Iniciar servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });

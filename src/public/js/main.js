@@ -1,3 +1,13 @@
+const usuarioLogueado = JSON.parse(sessionStorage.getItem('usuarioPOS'));
+
+// Si no hay sesión, lo mandamos al login
+if (!usuarioLogueado) {
+    window.location.href = '/login.html';
+} else {
+    // Si hay sesión, mostramos la pantalla
+    // (Asegúrate de poner el estilo display:none en el HTML como veremos abajo)
+    document.body.style.display = "block"; 
+}
 // Cargar productos al abrir la página
 document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
@@ -78,4 +88,8 @@ async function cargarAuditoria() {
     } catch (error) {
         console.error('Error cargando auditoría:', error);
     }
+}
+function logout() {
+    sessionStorage.removeItem('usuarioPOS');
+    window.location.href = '/login.html';
 }

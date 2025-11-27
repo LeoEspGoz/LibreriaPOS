@@ -6,9 +6,9 @@ require('dotenv').config();
 // IMPORTAR LA CONEXIÓN (Para el diagnóstico)
 const db = require('./src/config/db');
 
-// --- AQUÍ ESTABA EL ERROR: FALTABA ESTA LÍNEA ---
 const productoRoutes = require('./src/routes/productoRoutes');
-const ventaRoutes = require('./src/routes/ventaRoutes'); // <--- NUEVO
+const ventaRoutes = require('./src/routes/ventaRoutes'); 
+const authRoutes = require('./src/routes/authRoutes'); 
 // ------------------------------------------------
 
 const app = express();
@@ -17,7 +17,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'src/public')));
-app.use('/api/ventas', ventaRoutes); // <--- NUEVO
+app.use('/api/ventas', ventaRoutes); 
+app.use('/api/auth', authRoutes); 
 
 // --- BLOQUE DE DIAGNÓSTICO (Opcional, pero útil) ---
 (async () => {

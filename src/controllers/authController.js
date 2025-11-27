@@ -4,8 +4,8 @@ exports.login = async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // CORRECCIÓN PARA CUMPLIR RÚBRICA:
-        // No comparamos la contraseña directa, usamos SHA2(?, 256) en la consulta SQL.
+       
+        // no comparamos la contraseña directa, usamos SHA2 en la consulta SQL.
         const sql = `
             SELECT UsuarioID, NombreUsuario, Rol 
             FROM Usuarios 
@@ -19,7 +19,7 @@ exports.login = async (req, res) => {
         if (rows.length > 0) {
             const user = rows[0];
             
-            // Éxito: Devolvemos los datos del usuario (sin el password)
+            // Devolvemos los datos del usuario (sin el password)
             res.json({ 
                 success: true, 
                 message: 'Bienvenido al sistema', 

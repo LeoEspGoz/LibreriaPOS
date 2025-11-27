@@ -71,7 +71,7 @@ exports.createProducto = async (req, res) => {
     }
 };
 exports.deleteProducto = async (req, res) => {
-    const { id } = req.params; // Aquí el ID es el ISBN o la Clave, según prefieras. Usaremos Clave (ID).
+    const { id } = req.params; // Aquí el ID es el ISBN o la Clave. Usaremos Clave (ID).
     try {
         // Primero borramos detalles de ventas asociados para mantener integridad (Opcional, depende de tu lógica)
         // await db.query('DELETE FROM DetalleVenta WHERE ProductoID = ?', [id]);
